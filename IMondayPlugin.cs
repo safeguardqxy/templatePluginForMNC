@@ -1,4 +1,4 @@
-﻿namespace MondayPluginLib
+namespace MondayPluginLib
 {
     public interface IMondayPlugin : IDisposable
     {
@@ -67,21 +67,34 @@
 
         /// <summary>
         /// 接受信息后回复
+        /// </summary>
+        /// <remarks>
         /// 返回null表示不处理，交由下一个处理器继续处理
         /// 返回其他值（包括空）会拦截信息处理
-        /// </summary>
+        /// </remarks>
         /// <param name="qq"></param>
         /// <param name="group"></param>
         /// <param name="order"></param>
         /// <param name="rawMsg"></param>
         /// <param name="paras"></param>
         /// <returns></returns>
-        string? ReceiveMsgHandler(long qq, long group, string order, string rawMsg, List<string> paras);
+        Task<string?> ReceiveMsgHandler(long qq, long group, string order, string rawMsg, List<string> paras);
+
+        /// <summary>
+        /// 收到的群事件处理
+        /// </summary>
+        /// <remarks></remarks>
+        /// <param name="qq">来源ID</param>
+        /// <param name="group">来源群</param>
+        /// <param name="eventName">事件名称</param>
+        /// <param name="rawMsg">可能有的原始数据</param>
+        /// <returns></returns>
+        Task<string?> GroupEventHandler(long qq, long group, string eventName, string rawMsg);
 
         /// <summary>
         /// 插件要求类
-        /// 尽可能少，特别是尽可能少的权限和.NET包依赖
         /// </summary>
+        /// <remarks>尽可能少，特别是尽可能少的权限和.NET包依赖</remarks>
         public class PluginRequirement
         {
             /// <summary>
@@ -135,21 +148,71 @@
 
             /// <summary>
             /// 调用Api获取结果
+            /// (尽可能不要直接使用SendMsg发送信息,在处理器中返回你想发送的信息,多个信息可以使用信息分隔符)
             /// </summary>
-            /// <param name="type">api类型</param>
-            /// <param name="name">api名称</param>
+            /// <remarks>
+            /// 请参考文档,基本和OnebotV11相同,但api命名均为驼峰法,参数命名为下划线法
+            /// 建议重载这个方法以便你自己使用
+            /// </remarks>
+            /// <param name="type">api类型
+            /// 参考ApiType，请转换为int;
+            /// 如:(int)ApiType.Action</param>
+            /// <param name="name">api名称
+            /// 参考ActionType,RequestType;
+            /// 如:Enum.GetName(ActionType.DeleteMsg)</param>
             /// <param name="paras">api参数</param>
-            /// <returns>结果json值</returns>
-            public string ExecuteApi(int type, string name, Dictionary<string, string> paras);
+            /// <returns>结果json值或信息ID</returns>
+            public Task<string> Execute(int type, string name, Dictionary<string, string> paras);
+
+            /// <summary>
+            /// 请求数据
+            /// </summary>
+            /// <remarks>相当于Execute的参数为(int)ApiType.Request，并且赋值user_id和group_id</remarks>
+            /// <param name="name">同Execute</param>
+            /// <param name="id">赋值user_id</param>
+            /// <param name="group">赋值group_id</param>
+            /// <param name="paras">同Execute</param>
+            /// <returns></returns>
+            public Task<string> RequsetData(string name, long id, long group, Dictionary<string, string> paras);
+
+            /// <summary>
+            /// 执行操作
+            /// (尽可能不要直接使用SendMsg发送信息,在处理器中返回你想发送的信息,多个信息可以使用信息分隔符)
+            /// </summary>
+            /// <remarks>相当于Execute的参数为(int)ApiType.Action，并且赋值user_id和group_id</remarks>
+            /// <param name="name">同Execute</param>
+            /// <param name="id">赋值user_id</param>
+            /// <param name="group">赋值group_id</param>
+            /// <param name="paras">同Execute</param>
+            public Task<string> ExecuteAction(string name, long id, long group, Dictionary<string, string> paras);
 
             /// <summary>
             /// 获取用户昵称
             /// </summary>
-            /// <param name="id"></param>
+            /// <param name="id">用户ID</param>
+            /// <param name="group">群聊ID,0则为用户昵称,传入则为对应群聊群名片</param>
             /// <returns></returns>
-            public string GetUserName(long id, long group);
+            public Task<string> GetUserName(long id, long group = 0);
 
-            //--------------------以下为预留枚举，【暂未实装】----------------------
+            /// <summary>
+            /// 获取用户身份标识,含系统身份SysAdmin,BotAdmin等
+            /// </summary>
+            /// <param name="id">用户ID</param>
+            /// <param name="group">群聊ID</param>
+            /// <returns></returns>
+            public Task<List<string>> GetUserMarks(long id, long group);
+
+            /// <summary>
+            /// 执行禁言
+            /// </summary>
+            /// <remarks>单位为秒,请不要太大,至多30天,0表示取消禁言</remarks>
+            /// <param name="id">被禁言的用户</param>
+            /// <param name="groupid">所在群聊</param>
+            /// <param name="time">时长,秒,请不要太大,至多30天,0表示取消禁言</param>
+            /// <returns></returns>
+            public Task ShutUp(long id, long groupid, long time = 0);
+
+            //--------------------以下为预留枚举,【部分暂未实装】----------------------
             #region 各类枚举
             /// <summary>
             /// API类型
@@ -177,9 +240,18 @@
             /// <summary>
             /// 信息类型枚举
             /// </summary>
+            /// <remarks>
+            /// 格式:[MNC|Text|ContentType|参数名=参数值,参数名=参数值]
+            /// 如:[MNC|Text|ImgMsg|file=https://www.baidu.com/img/PCfb_5bf082d29588c07f842ccde3f97243ea.png]
+            /// MNC码功能更强,支持嵌套、扩展等，也会不断扩展功能，信息参数参考CQ码
+            /// ----->支持CQ码，不需要什么扩展的，直接使用CQ码
+            /// </remarks>
             public enum ContentType
             {
                 UnknownMsg,
+                /// <summary>
+                /// 信息分隔符
+                /// </summary>
                 ChainSeparator,
                 TextMsg,
                 ImgMsg,
@@ -195,7 +267,13 @@
                 LocationMsg,
                 MusicMsg,
                 ReplyMsg,
+                /// <summary>
+                /// 禁用
+                /// </summary>
                 XmlMsg,
+                /// <summary>
+                /// 禁用
+                /// </summary>
                 JsonMsg,
                 EmptyMsg,
                 OtherMsg,
