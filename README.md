@@ -12,12 +12,12 @@ MNC的插件模板
 * 点击右边Release，选择最新的版本Zip文件（比如：MNCPluginV1.zip）并下载<br>
 * 解压到合适的文件夹<br>
 * 打开：`Plugin`文件夹<br>
-* 复制`模板插件`文件夹，并改名为你的插件名称<br>
+* 复制`模板插件`文件夹，并改名为你的`插件名称`<br>
 * 打开`MondayPlugin.cs`文件<br>
 * 编写你的代码<br>
 * 运行`MondayCoreForPluginDebug.exe`<br>
 * 按提示操作<br>
-* 确认没有问题后将`模板插件`这个文件夹发给我就行<br>
+* 确认没有问题后将`插件名称`这个文件夹发给我就行<br>
 
 提示：
 -
