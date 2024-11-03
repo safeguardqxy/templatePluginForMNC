@@ -108,6 +108,21 @@ namespace MondayPluginLib
             public int InterfaceVersion { get; set; } = 1;
 
             /// <summary>
+            /// 是否需要监听群聊信息
+            /// </summary>
+            public bool ListenGroupMsg { get; set; } = true;
+
+            /// <summary>
+            /// 是否需要监听私聊信息
+            /// </summary>
+            public bool ListenPrivateMsg { get; set; } = false;
+
+            /// <summary>
+            /// 是否需要监听群聊信息
+            /// </summary>
+            public bool ListenGroupEvent { get; set; } = false;
+
+            /// <summary>
             /// 运行平台
             /// </summary>
             public List<string> Platform { get; set; } = ["win", "linux", "mac"];
