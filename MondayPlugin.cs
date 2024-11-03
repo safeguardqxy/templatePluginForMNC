@@ -1,4 +1,4 @@
-﻿using MondayPluginLib;
+using MondayPluginLib;
 
 namespace PluginForMonday
 {
@@ -17,14 +17,21 @@ namespace PluginForMonday
         /// <param name="order">去除参数后的命令主文本</param>
         /// <param name="rawMsg">原始文本（如果含有表情、图片、位置、音乐卡等非纯文本信息，将尽可能转换为可视的文本）
         /// 比如：[ReplyMsg|id:2072803349;][AtMsg|qq:2787592125;][ImgMsg|file:F07FEA9B54082D2F85E2CEA83E659AA1.jpg;url:...;]
+        /// 有需要你可以自己解析它们格式：[信息类型|参数名:参数值]，参考接口文档
+        /// 为了防止套娃，不会返回MNC码或者CQ码！！！
         /// </param>
         /// <param name="paras">简单解析得到的参数列表</param>
         /// <returns></returns>
-        public string? ReceiveMsgHandler(long qq, long group, string order, string rawMsg, List<string> paras)
+        public async Task<string?> ReceiveMsgHandler(long qq, long group, string order, string rawMsg, List<string> paras)
         {
+            await Task.CompletedTask;//如果你不需要异步的话【看不懂就不动它】
+
             //在控制台显示信息，请不要直接使用Console!!!
             //coreApi?.PrintMsg($"你想显示的东西")
+
+            //举例，这里显示一下收到的信息情况
             coreApi?.PrintMsg($">>>收到群{group}成员{qq}的信息:{rawMsg}");
+
 
             //返回你想回复的信息
             //【使用你喜欢的格式，做你想做的事情】<---------------------------------------<<<<<<<<<<<<<<<<<<
@@ -41,6 +48,24 @@ namespace PluginForMonday
                 _ => null,//返回null表示交给其他插件处理，返回其他值则拦截
             };
         }
+
+        /// <summary>
+        /// 发生群聊事件时调用
+        /// 【一般你用不上,可以不用管这个】
+        /// 真的需要的话记得打开监听开关
+        /// </summary>
+        /// <param name="qq">来源用户ID</param>
+        /// <param name="group">来源群聊ID</param>
+        /// <param name="eventName">事件名称,参考接口文档</param>
+        /// <param name="rawMsg">可能有的原始数据</param>
+        /// <returns></returns>
+        public async Task<string?> GroupEventHandler(long qq, long group, string eventName, string rawMsg)
+        {
+            await Task.CompletedTask;
+            //coreApi?.PrintMsg($">>>收到群{group}成员{qq}的事件:{eventName}\r\n原始信息:{rawMsg}");
+            return null;
+        }
+
         #endregion
 
         //-------------------------下面是你的插件的基本信息，根据实际情况填写-------------------------
@@ -49,19 +74,19 @@ namespace PluginForMonday
         /// 插件标识的名称
         /// </summary>
         /// <remarks>建议使用作者名称缩写-插件名称，避免与其他人插件同名导致无法加载</remarks>
-        public string Name => "作者名称缩写 - 插件名称";//比如QXY-templatePluginForMNC
+        public string Name => "作者名称缩写 - 插件名称";//比如:QXY-templatePluginForMNC
 
         /// <summary>
         /// 插件主页
         /// </summary>
         /// <remarks>【没有就不用填】</remarks>
-        public string Url => "https://github.com/safeguardqxy/templatePluginForMNC/";
+        public string Url => "";//比如:"https://github.com/safeguardqxy/templatePluginForMNC/";
 
         /// <summary>
         /// 作者列表
         /// </summary>
         public Dictionary<string, string> Authors => new() {
-            { "safeguardqxy","https://github.com/safeguardqxy/"},
+            //比如:{ "safeguardqxy","https://github.com/safeguardqxy/"},
             { "作者1名称","作者1主页Url"},
             { "作者2名称","作者2主页Url"},
             { "以此类推","不需要这么多就按行删"},
@@ -71,7 +96,7 @@ namespace PluginForMonday
         /// 插件介绍
         /// </summary>
         /// <remarks>方便大家知道你的作用</remarks>
-        public string Description => "插件介绍";
+        public string Description => "插件介绍";//比如:这是一个模板插件，只作为简单的示例
 
         /// <summary>
         /// 插件类型
@@ -83,7 +108,7 @@ namespace PluginForMonday
         /// 插件标签
         /// </summary>
         /// <remarks>指出你的插件主要特点或功能</remarks>
-        public List<string> Tags => ["插件标签"];
+        public List<string> Tags => ["插件标签"];//比如:["模板","简单回复","复读功能"]
 
         /// <summary>
         /// 插件版本
@@ -119,6 +144,13 @@ namespace PluginForMonday
             InterfaceVersion = 1,
             //最低api版本
             ApiVersion = 1,
+            //监听群聊信息
+            ListenGroupMsg = true,
+            //监听私聊信息
+            ListenPrivateMsg = false,
+            //监听群聊事件
+            ListenGroupEvent = false,
+            //其他的参考接口文档
         };
         #endregion
 
@@ -127,7 +159,7 @@ namespace PluginForMonday
         /// <summary>
         /// 主程序Api
         /// </summary>
-        /// <remarks>用于调用主程序功能</remarks>
+        /// <remarks>用于调用主程序功能，参考接口文档</remarks>
         private IMondayPlugin.IMondayCoreApi? coreApi;
 
         /// <summary>
