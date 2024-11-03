@@ -118,7 +118,7 @@ namespace MondayPluginLib
             public bool ListenPrivateMsg { get; set; } = false;
 
             /// <summary>
-            /// 是否需要监听群聊信息
+            /// 是否需要监听群聊事件
             /// </summary>
             public bool ListenGroupEvent { get; set; } = false;
 
