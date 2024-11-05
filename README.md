@@ -11,7 +11,7 @@ MNC的插件模板
 * Temp文件夹内是缓存文件，即编译的dll，如果你了解的话，编译失败，你可以查看里面检查错误
 * Helper文件夹存放api的一些说明
 * Interface文件夹存放接口的原始CS文件，内有注释
-* Lib文件夹存放需要的一些dll
+* Lib文件夹存放需要的一些dll，更新版本主要就是更新这个文件夹的东西以及MondayCoreForPluginDebug.exe，直接覆盖就好
 * MondayCoreForPluginDebug.exe供简单调试所用，现功能简单，主要是编译cs文件，加载，模拟信息输入和返回
 
 食用方法：
