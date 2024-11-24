@@ -33,7 +33,7 @@ MNC的插件模板
 提示：
 -
 * 需要安装.net,[传送门](https://dotnet.microsoft.com/zh-cn/download)<br>
-*建议使用自己喜欢的编辑器<br>
+* 建议使用自己喜欢的编辑器<br>
   * 比如VS code,[传送门](https://code.visualstudio.com/download)--->`最好选择System版本而不是User`<br>
     * VS code提示:
       * 安装后选择左边的扩展，搜索`Chinese`安装一个汉化包
