@@ -14,7 +14,7 @@ namespace PluginForMonday
         /// <summary>
         /// 插件主页
         /// </summary>
-        /// <remarks>【没有就不用填】</remarks>
+        /// <remarks>没有就不用填</remarks>
         public string Url => "";//比如:"https://github.com/safeguardqxy/templatePluginForMNC/";
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace PluginForMonday
         /// <summary>
         /// 插件类型
         /// </summary>
-        /// <remarks>这个暂时不需要改</remarks>
+        /// <remarks>预留</remarks>
         public string PluginType => "default";
 
         /// <summary>

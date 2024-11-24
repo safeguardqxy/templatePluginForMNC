@@ -82,7 +82,7 @@
         /// <param name="group">来源群ID</param>
         /// <param name="order">主命令文本，如：复读 啦啦啦，order="复读"，paras=["啦啦啦"]</param>
         /// <param name="rawMsg">原始信息（CQ码）</param>
-        /// <param name="rawJsonMsg">解析的原始json信息，预留</param>
+        /// <param name="rawJsonMsg">解析的json信息，预留</param>
         /// <param name="paras">命令参数，如：复读 啦啦啦，order="复读"，paras=["啦啦啦"]</param>
         /// <param name="ats">信息内容中At的id号列表，是字符串</param>
         /// <returns>你要回复的信息（支持CQ码）或返回Null表示忽略</returns>
@@ -96,7 +96,7 @@
         /// <param name="toid">被动方ID</param>
         /// <param name="group">来源群</param>
         /// <param name="eventName">事件名称</param>
-        /// <param name="rawJsonMsg">可能有的原始json数据</param>
+        /// <param name="rawJsonMsg">解析的json数据，预留</param>
         /// <returns>你要回复给被动方的信息（支持CQ码）或返回Null表示忽略</returns>
         Task<string?> GroupEventHandler(long id, long toid, long group, string eventName, string rawJsonMsg);
 

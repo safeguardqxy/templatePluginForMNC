@@ -15,7 +15,7 @@ namespace PluginForMonday
             coreApi = mondayCoreApi;
             coreApi.PrintMsg($"{Name}初始化完成");
             coreApi.PrintMsg($"Api版本:{coreApi.Version};插件版本:{Version}");
-            coreApi.PrintMsg($"监听私聊：{Requirement.ListenPrivateMsg}；监听群信息：{Requirement.ListenGroupMsg}；监听群事件{Requirement.ListenGroupEvent}");
+            coreApi.PrintMsg($"监听：私聊={Requirement.ListenPrivateMsg},群信息={Requirement.ListenGroupMsg},群事件={Requirement.ListenGroupEvent}");
             coreApi.PrintMsg($"关注的指令:{string.Join(',', Keys)}");
 
             //初始化代码位置
