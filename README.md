@@ -8,11 +8,14 @@ MNC的插件模板
 最基本的一些功能，初始版，毕竟非专业人员ԅ(¯﹃¯ԅ)（版本号我都简化成数字了）<br>
 `有很多信息参考了OnebotV11文档，在此说明:https://github.com/botuniverse/onebot-11/`
 * Plugin文件夹内是模板插件，复制这个文件夹改名即可
-* Temp文件夹内是缓存文件，即编译的dll，如果你了解的话，编译失败，你可以查看里面检查错误
+* Temp文件夹内是缓存文件，即编译的dll
+  * 如果你了解的话，编译失败，你可以查看里面检查错误
 * Helper文件夹存放api的一些说明
 * Interface文件夹存放接口的原始CS文件，内有注释
-* Lib文件夹存放需要的一些dll，更新版本主要就是更新这个文件夹的东西以及MondayCoreForPluginDebug.exe，直接覆盖就好
-* MondayCoreForPluginDebug.exe供简单调试所用，现功能简单，主要是编译cs文件，加载，模拟信息输入和返回
+* Lib文件夹存放需要的一些dll
+  * 更新版本主要就是更新这个文件夹的东西以及MondayCoreForPluginDebug.exe，直接覆盖就好
+* MondayCoreForPluginDebug.exe供简单调试所用
+  * 现功能简单，主要是编译cs文件，加载，模拟信息输入和返回
 
 食用方法：
 -
@@ -35,5 +38,5 @@ MNC的插件模板
   * VS code提示:
     * 安装后选择左边的扩展，搜索`Chinese`安装一个汉化包
     * 安装一些合适的C#扩展
-    * 扩展尽量选择下载人数多的[](url)
+    * 扩展尽量选择下载人数多的
 * 如果访问Git困难，可以尝试：[开发者快车](https://github.com/docmirror/dev-sidecar)
