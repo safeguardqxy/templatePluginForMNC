@@ -8,6 +8,11 @@ MNC的插件模板
 最基本的一些功能，初始版，毕竟非专业人员ԅ(¯﹃¯ԅ)（版本号我都简化成数字了）<br>
 `有很多信息参考了OnebotV11文档，在此说明:https://github.com/botuniverse/onebot-11/`
 * Plugin文件夹内是模板插件，复制这个文件夹改名即可
+  * MondayPlugin.cs 主文件，内部定义了一个api变量
+  * MondayPlugin.Config.cs 配置文件，定义插件基本信息
+  * MondayPlugin.Lifecycle.cs 插件加载、卸载等生命周期
+  * MondayPlugin.ReceiveMsgHandler.cs 信息处理器
+  * MondayPlugin.GroupEventHandler.cs 事件处理器
 * Temp文件夹内是缓存文件，即编译的dll
   * 如果你了解的话，编译失败，你可以查看里面检查错误
 * Helper文件夹存放api的一些说明
@@ -24,7 +29,7 @@ MNC的插件模板
 * 解压到合适的文件夹<br>
 * 打开：`Plugin`文件夹<br>
 * 复制`模板插件`文件夹，并改名为你的`插件名称`<br>
-* 打开`MondayPlugin.cs`文件<br>
+* 打开`MondayPlugin.Config.cs`或者其他文件，如`MondayPlugin.ReceiveMsgHandler.cs`<br>
 * 编写你的代码<br>
 * 运行`MondayCoreForPluginDebug.exe`<br>
 * 按提示操作<br>
