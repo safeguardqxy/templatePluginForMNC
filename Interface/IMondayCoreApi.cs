@@ -124,7 +124,7 @@
         /// 格式:[MNC|Text|ContentType|参数名=参数值,参数名=参数值]
         /// 如:[MNC|Text|ImgMsg|file=https://www.baidu.com/img/PCfb_5bf082d29588c07f842ccde3f97243ea.png]
         /// MNC码功能更强,支持嵌套、扩展等，也会不断扩展功能，信息参数参考CQ码
-        /// ----->支持CQ码，推荐使用，不需要什么扩展的，直接使用CQ码！！！
+        /// ----->支持CQ码，【推荐使用】，不需要什么扩展的，直接使用CQ码！！！
         /// </remarks>
         public enum ContentType
         {
@@ -147,13 +147,7 @@
             LocationMsg,
             MusicMsg,
             ReplyMsg,
-            /// <summary>
-            /// 禁用
-            /// </summary>
             XmlMsg,
-            /// <summary>
-            /// 禁用
-            /// </summary>
             JsonMsg,
             EmptyMsg,
             OtherMsg,
@@ -169,6 +163,10 @@
             /// 服务器事件
             /// </summary>
             Serveice,
+            /// <summary>
+            /// 自身事件
+            /// </summary>
+            Message_Sent,
             /// <summary>
             /// 群文件上传
             /// </summary>

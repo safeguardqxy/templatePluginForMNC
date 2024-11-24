@@ -81,11 +81,8 @@
         /// <param name="id">来源ID</param>
         /// <param name="group">来源群ID</param>
         /// <param name="order">主命令文本，如：复读 啦啦啦，order="复读"，paras=["啦啦啦"]</param>
-        /// <param name="rawMsg">原始文本（如果含有表情、图片、位置、音乐卡等非纯文本信息，将尽可能转换为可视的文本）
-        /// 比如：[ReplyMsg|id:2072803349;][AtMsg|id:2787592125;][ImgMsg|file:F07FEA9B54082D2F85E2CEA83E659AA1.jpg;url:...;]
-        /// 有需要你可以自己解析它们格式：[信息类型|参数名:参数值]，参考接口文档
-        /// 为了防止套娃，不会返回MNC码或者CQ码！！！</param>
-        /// <param name="rawJsonMsg">可能有的原始json信息</param>
+        /// <param name="rawMsg">原始信息（CQ码）</param>
+        /// <param name="rawJsonMsg">解析的原始json信息，预留</param>
         /// <param name="paras">命令参数，如：复读 啦啦啦，order="复读"，paras=["啦啦啦"]</param>
         /// <param name="ats">信息内容中At的id号列表，是字符串</param>
         /// <returns>你要回复的信息（支持CQ码）或返回Null表示忽略</returns>
@@ -118,6 +115,11 @@
             /// 接口版本
             /// </summary>
             public int InterfaceVersion { get; set; } = 2;
+
+            /// <summary>
+            /// .Net版本
+            /// </summary>
+            public string NetVersion { get; set; } = "8.0";
 
             /// <summary>
             /// 是否需要监听群聊信息
